@@ -1,0 +1,17 @@
+
+<header>
+    <div class="logo">Curd</div>
+    <nav [ngClass]="{'Open' : open}">
+        <div class="logo">Curd</div>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Contact</a></li>
+            <li><a href="">About</a></li>
+        </ul>
+    </nav>
+    <div class="hamburger" (click)="open = !open">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</header>
