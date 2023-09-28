@@ -2,8 +2,27 @@
 
 :root{
     --bg : #212529;
+    --button : #9A4BC5;
 }
 
 body{
     background-color: #e3e9f7;
 }
+
+input{
+    border: 1px solid rgba(0, 0, 0, 0.261) !important;
+    box-shadow: none !important;
+}
+  
+  input:focus{
+    border: 2px solid rgb(0, 0, 0) !important;
+  }
+
+select{
+    border: 1px solid rgba(0, 0, 0, 0.261) !important;
+    box-shadow: none !important;
+}
+  
+  select:focus{
+    border: 2px solid rgb(0, 0, 0) !important;
+  }

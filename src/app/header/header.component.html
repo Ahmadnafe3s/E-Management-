@@ -1,12 +1,12 @@
 
 <header>
-    <div class="logo">Curd</div>
+    <div class="logo"><span>E</span> Management</div>
     <nav [ngClass]="{'Open' : open}">
-        <div class="logo">Curd</div>
+        <div class="logo"><span>E</span> Management</div>
         <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">Contact</a></li>
-            <li><a href="">About</a></li>
+            <li><a >Home</a></li>
+            <li><a routerLinkActive="click">E List</a></li>
+            <li><a routerLink="/Add-Data" routerLinkActive="click">Add Data</a></li>
         </ul>
     </nav>
     <div class="hamburger" (click)="open = !open">

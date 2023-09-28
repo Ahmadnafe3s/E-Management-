@@ -1,0 +1,101 @@
+<form class="container-fluid" [formGroup]="empForm" (ngSubmit)="onSubmit()">
+    <div class="row form-body justify-content-center">
+        <h5 class="text-center mb-4 logo">Fill Credentials..</h5>
+
+        <div class="col-md-6 mb-3">
+            <label for="name">Name*</label>
+            <input type="text" id="name" class="form-control" placeholder="Enter your name" formControlName="Name">
+            <span class="text-danger" *ngIf="empForm.get('Name').invalid && empForm.get('Name').touched">Enter valid name!</span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="email">Email</label>
+            <input type="text" id="email" class="form-control" placeholder="Enter your email" formControlName="Email">
+            <span class="text-danger" *ngIf="empForm.get('Email').invalid && empForm.get('Email').touched">Enter valid email!</span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="phone">Phone*</label>
+            <input type="text" id="name" class="form-control" placeholder="Enter your phone" formControlName="Phone">
+            <span class="text-danger" *ngIf="empForm.get('Phone').invalid && empForm.get('Phone').touched">Enter valid phone!</span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="phone">State*</label>
+            <select class="form-select" aria-label="Default select example" id="State" formControlName="State">
+                <option value="">Select State</option> <!--Nothing should be selected in the selected value-->
+                <option value="UP">Uttar pradesh</option>
+                <option value="MH">Mumbai</option>
+                <option value="Goa">Goa</option>
+                <option value="DL">Delhi</option>
+                <option value="BH">Bihar</option>
+                <option value="UK">Uttrakhand</option>
+                <option value="TN">Tamil Nadu</option>
+                <option value="US">Udisa</option>
+            </select>
+            <span class="text-danger" *ngIf="empForm.get('State').invalid && empForm.get('State').touched">This field is required!</span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="District">District*</label>
+            <select class="form-select mb-3" aria-label="Default select example" id="District" formControlName="District">
+                <option value="">Select District</option>
+                <option value="Balrampur">Balrampur</option>
+                <option value="Siddarthnagar">Siddarthnagar</option>
+                <option value="Tulsipur">Tulsipur</option>
+                <option value="Kapilvastu">Kapilvastu</option>
+                <option value="Utraula">Utraula</option>
+                <option value="Gonda">Gonda</option>
+                <option value="Barabanki">Barabanki</option>
+                <option value="Lucknow">Lucknow</option>
+            </select>
+            <span class="text-danger" *ngIf="empForm.get('District').invalid && empForm.get('District').touched">This field is required!</span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="DOB">DOB*</label>
+            <input type="date" id="DOB" class="form-control" formControlName="Dob">
+            <span class="text-danger" *ngIf="empForm.get('Dob').invalid && empForm.get('Dob').touched">This field is required!</span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="j-date">Joining Date*</label>
+            <input type="date" id="j-date" class="form-control" formControlName="Joining_Date">
+            <span class="text-danger" *ngIf="empForm.get('Joining_Date').invalid && empForm.get('Joining_Date').touched">This field is required!</span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <p>Select Intern Type*</p>
+            <div class="d-flex justify-content-evenly">
+                <div class="form-check" *ngFor="let InternT of internType">
+                    <input class="form-check-input" type="radio" name="Intern_Type" [id]="InternT"
+                        [value]="InternT" formControlName="Intern_Type">
+                    <label class="form-check-label" for="{{InternT}}" >
+                        {{InternT}}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-3 ">
+            <p>Select your gender*</p>
+            <div class="d-flex justify-content-evenly">
+                <div class="form-check" *ngFor="let Gender of gender">
+                    <input class="form-check-input" type="radio" name="Gender" [id]="Gender" [value]="Gender" formControlName="Gender">
+                    <label class="form-check-label" for="{{Gender}}">
+                        {{Gender}}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="Sub-btn1 scale btn" [disabled]="empForm.invalid">Submit</button>
+            |
+            <button type="reset" class="Sub-btn2 scale">Reset</button>
+        </div>
+        <br>
+        <br>
+    </div>
+
+</form>
