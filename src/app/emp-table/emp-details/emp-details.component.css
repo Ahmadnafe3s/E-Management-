@@ -1,0 +1,27 @@
+.list-group-item {
+    padding: 20px 0;
+}
+
+.main-div {
+    background-color: #fefefe;
+    padding: 30px 30px 5px 30px;
+    border-radius: 12px;
+}
+
+.c-body {
+    padding: 15px 0;
+    border-bottom: 1px dotted #8080806b;
+    font-weight: 400;
+}
+
+.name{
+    padding: 13px 0;
+    background-color: #f6f4ff;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+    cursor: pointer;
+    color: rgb(0, 145, 255) !important;
+}

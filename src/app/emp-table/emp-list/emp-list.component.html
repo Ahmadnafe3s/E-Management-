@@ -1,0 +1,26 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+
+    <div class="col-md-10 ">
+      <table class="table" >
+        <thead class="th">
+          <tr>
+            <th scope="col">UID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Deatils</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let empList of EmpList ; let index = index">
+            <th class="tb" scope="row">{{empList.UID}}</th>
+            <td class="tb">{{empList.Name}}</td>
+            <td class="tb"><i class="bi bi-arrow-right-circle-fill" [routerLink]="['Details' , index]"></i></td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <h1 *ngIf="(EmpList.length < 1)">Data is not present..</h1> -->
+    </div>
+  </div>
+</div>
+
+<!-- *ngIf="!(EmpList.length < 1)" -->

@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-emp-table',
   standalone: true,
   imports: [CommonModule , RouterModule],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  templateUrl: './emp-table.component.html',
+  styleUrls: ['./emp-table.component.css']
 })
-export class HeaderComponent {
-  open: boolean = false;
-}
+export class EmpTableComponent {
 
+}

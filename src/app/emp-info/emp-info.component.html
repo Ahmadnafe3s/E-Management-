@@ -90,9 +90,9 @@
         </div>
 
         <div class="text-center mt-4">
-            <button type="submit" class="Sub-btn1 scale btn" [disabled]="empForm.invalid">Submit</button>
+            <button type="submit" class="Sub-btn1 scale btn" [disabled]="empForm.invalid">{{editMode ? 'Upadte' : 'Submit'}}</button>
             |
-            <button type="reset" class="Sub-btn2 scale">Reset</button>
+            <button type="button" class="Sub-btn2 scale" (click)="onReset()">Reset</button>
         </div>
         <br>
         <br>

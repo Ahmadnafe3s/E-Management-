@@ -1,0 +1,20 @@
+
+
+table{
+    text-align: center;
+}
+
+thead tr th{
+    padding: 20px 0;
+    background-color: var(--button);
+    color: white;
+}
+
+.tb{
+    padding: 25px 0;
+}
+
+i{
+   font-size: 20px;
+   cursor: pointer;
+}

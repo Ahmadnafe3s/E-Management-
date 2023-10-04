@@ -1,0 +1,49 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        
+        <div class="col-md-8 main-div" *ngIf="!!empDetails">
+            <H1 class="name">{{empDetails.Name}}</H1>
+
+            <div class="d-flex justify-content-between c-body">
+                <div>UID*</div>
+                <div>{{empDetails.UID}}</div>
+            </div>
+            <div class="d-flex justify-content-between c-body">
+                <div>Email*</div>
+                <div>{{empDetails.Email}}</div>
+            </div>
+            <div class="d-flex justify-content-between c-body">
+                <div>Phone*</div>
+                <div>{{empDetails.Phone}}</div>
+            </div>
+            <div class="d-flex justify-content-between c-body">
+                <div>State*</div>
+                <div>{{empDetails.State}}</div>
+            </div>
+            <div class="d-flex justify-content-between c-body">
+                <div>District*</div>
+                <div>{{empDetails.District}}</div>
+            </div>
+            <div class="d-flex justify-content-between c-body">
+                <div>DOB*</div>
+                <div>{{empDetails.Dob}}</div>
+            </div>
+            <div class="d-flex justify-content-between c-body">
+                <div>Joining Date*</div>
+                <div>{{empDetails.Joining_Date}}</div>
+            </div>
+            <div class="d-flex justify-content-between c-body">
+                <div>Intern Type*</div>
+                <div>{{empDetails.Intern_Type}}</div>
+            </div>
+            <div class="d-flex justify-content-between c-body">
+                <div>Gender*</div>
+                <div>{{empDetails.Gender}}</div>
+            </div>
+            <br>
+            <p class="text-center"><a (click)="onEdit()">edit</a> | <a (click)="onDelete()">delete</a> | <a routerLink="/E-Table">Back</a></p>
+        </div>
+    </div>
+</div>
+<br>
+<br>
