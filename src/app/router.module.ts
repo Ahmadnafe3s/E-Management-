@@ -5,6 +5,7 @@ import { EmpTableComponent } from "./emp-table/emp-table.component";
 import { EmpListComponent } from "./emp-table/emp-list/emp-list.component";
 import { EmpDetailsComponent } from "./emp-table/emp-details/emp-details.component";
 
+
 const routes: Routes = [
     { path: 'Add-Data', component: EmpInfoComponent},
     {path: 'Edit/:id' , component:EmpInfoComponent},

@@ -1,8 +1,7 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-
-    <div class="col-md-10 ">
-      <table class="table" >
+    <div class="col-md-10" *ngIf="!isLoading && !(EmpList.length < 1)">
+      <table class="table">
         <thead class="th">
           <tr>
             <th scope="col">UID</th>
@@ -14,13 +13,32 @@
           <tr *ngFor="let empList of EmpList ; let index = index">
             <th class="tb" scope="row">{{empList.UID}}</th>
             <td class="tb">{{empList.Name}}</td>
-            <td class="tb"><i class="bi bi-arrow-right-circle-fill" [routerLink]="['Details' , index]"></i></td>
+            <td class="tb"><i class="bi bi-arrow-right-circle-fill" [routerLink]="['Details' , empList.UID]"></i></td>
           </tr>
         </tbody>
       </table>
-      <!-- <h1 *ngIf="(EmpList.length < 1)">Data is not present..</h1> -->
     </div>
+
+    <!-- Alert for data not avaliable -->
+    <div class="col-md-6 alert alert-light" *ngIf="!isLoading && (EmpList.length < 1) && !err">
+      <h4>You dont have any Data..</h4>
+      <br>
+      <div style="float: right;">
+        <button type="button" class="btn" routerLink="/Add-Data">Add Data</button>
+      </div>
+    </div>
+
+    <!-- Alert for Error -->
+    <div class="col-md-6 alert alert-danger" *ngIf="!isLoading && err">
+      <h4>Error.</h4>
+      <br>
+      <div class="text-center">
+        <p>{{err}}</p>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- *ngIf="!(EmpList.length < 1)" -->
+
+<app-loading *ngIf="isLoading"></app-loading>
