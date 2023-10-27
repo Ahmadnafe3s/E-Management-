@@ -27,7 +27,6 @@ export class EmpListComponent implements OnInit {
       err => {
         this.isLoading = false;
         this.err = err.statusText;
-        console.log(err);
       }
     )
 

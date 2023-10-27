@@ -4,9 +4,11 @@ import { NgModule } from "@angular/core";
 import { EmpTableComponent } from "./emp-table/emp-table.component";
 import { EmpListComponent } from "./emp-table/emp-list/emp-list.component";
 import { EmpDetailsComponent } from "./emp-table/emp-details/emp-details.component";
+import { AuthComponent } from "./auth/auth.component";
 
 
 const routes: Routes = [
+    {path: 'Auth' , component:AuthComponent},
     { path: 'Add-Data', component: EmpInfoComponent},
     {path: 'Edit/:id' , component:EmpInfoComponent},
     {

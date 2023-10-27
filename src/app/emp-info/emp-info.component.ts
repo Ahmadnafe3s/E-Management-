@@ -34,12 +34,12 @@ export class EmpInfoComponent implements OnInit {
       this.editMode = !!data.id
     })
 
-    // get data from server via UID ....
-
+    // get data from server via UID to bind into forms ....
     this.empService.getDetails(this.UID).subscribe(res => {
       this.IndividulEmp = res.data[0]
       this.HandleForm(this.IndividulEmp)
     })
+
     this.HandleForm('')
 
     this.getStates()
@@ -53,7 +53,7 @@ export class EmpInfoComponent implements OnInit {
     let district = '';
     let dob = '';
     let joining_date = '';
-    let intern = '';
+    let intern_type = '';
     let gender = '';
 
     if (this.editMode) {
@@ -64,7 +64,7 @@ export class EmpInfoComponent implements OnInit {
       district = IndividulEmp.District;
       dob = IndividulEmp.Dob;
       joining_date = IndividulEmp.Joining_Date;
-      intern = IndividulEmp.Intern_Type;
+      intern_type = IndividulEmp.Intern_Type;
       gender = IndividulEmp.Gender;
     }
 
@@ -76,10 +76,9 @@ export class EmpInfoComponent implements OnInit {
       'District': new FormControl(district, Validators.required),
       'Dob': new FormControl(dob, Validators.required),
       'Joining_Date': new FormControl(joining_date, Validators.required),
-      'Intern_Type': new FormControl(intern , Validators.required),
+      'Intern_Type': new FormControl(intern_type , Validators.required),
       'Gender': new FormControl(gender, Validators.required),
     })
-    console.log(intern);
   }
 
 
@@ -122,6 +121,7 @@ export class EmpInfoComponent implements OnInit {
   getStates() {
     this.empService.States.subscribe(res => {
       this.states = res.data;
+      //Getting district on edit time
       if (this.editMode) {
         this.getDistrict()
       }
