@@ -15,7 +15,7 @@ import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
   styleUrls: ['./emp-details.component.css'],
 })
 export class EmpDetailsComponent implements OnInit {
-  empDetails: EmpModel;
+  empDetails;
   UID = 0;
   message: null | string = null;
   alertMsg: null | string = null;
@@ -30,7 +30,7 @@ export class EmpDetailsComponent implements OnInit {
     this.isLoading = true;
     this.empService.getDetails(this.UID).subscribe(res => {
       this.isLoading = false;
-      this.empDetails = res.data[0]
+      this.empDetails = res.data
     })
   }
 

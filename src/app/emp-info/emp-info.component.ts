@@ -17,7 +17,7 @@ import { LoadingComponent } from '../Shared/loading/loading.component';
 })
 export class EmpInfoComponent implements OnInit {
   gender = ['Male', 'Female', 'Other']
-  internType = ['PartTime' , 'FullTime'];
+  internType = ['PartTime', 'FullTime'];
   IndividulEmp: EmpModel;
   UID;
   editMode = false;
@@ -29,19 +29,23 @@ export class EmpInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.router.params.subscribe((data: Params) => {
       this.UID = +data.id
       this.editMode = !!data.id
     })
 
     // get data from server via UID to bind into forms ....
-    this.empService.getDetails(this.UID).subscribe(res => {
-      this.IndividulEmp = res.data[0]
-      this.HandleForm(this.IndividulEmp)
-    })
+    if (this.editMode) {
+      this.empService.getDetails(this.UID).subscribe(res => {
+        this.IndividulEmp = res.data
+        this.HandleForm(this.IndividulEmp)
+      })
+    }
 
     this.HandleForm('')
 
+    // this.getStates()
     this.getStates()
   }
 
@@ -76,7 +80,7 @@ export class EmpInfoComponent implements OnInit {
       'District': new FormControl(district, Validators.required),
       'Dob': new FormControl(dob, Validators.required),
       'Joining_Date': new FormControl(joining_date, Validators.required),
-      'Intern_Type': new FormControl(intern_type , Validators.required),
+      'Intern_Type': new FormControl(intern_type, Validators.required),
       'Gender': new FormControl(gender, Validators.required),
     })
   }
@@ -107,7 +111,7 @@ export class EmpInfoComponent implements OnInit {
       },
       err => {
         this.isLoading = false;
-        this.toast.error({ detail: "ERROR", summary: err.statusText, duration: 3000, position: 'topCenter' });
+        this.toast.error({ detail: "ERROR", summary: err.message, duration: 3000, position: 'topCenter' });
       }
     )
   }
@@ -119,23 +123,23 @@ export class EmpInfoComponent implements OnInit {
   }
 
   getStates() {
-    this.empService.States.subscribe(res => {
-      this.states = res.data;
-      //Getting district on edit time
-      if (this.editMode) {
-        this.getDistrict()
-      }
-    })
+    this.empService.States
+      .subscribe(res => {
+        this.states = res.data;
+        //Getting district on edit time
+        if (this.editMode) {
+          this.getDistrict()
+        }
+      })
   }
 
   getDistrict() {
     let stateId = this.empForm.value.State
     if (this.empForm.get('State').valid) {
-      this.empService.getDistrict(stateId).subscribe(res => {
-        this.district = res.data
-      })
+      this.empService.getDistrict(stateId)
+        .subscribe(res => {
+          this.district = res.data
+        })
     }
   }
-
-
 }

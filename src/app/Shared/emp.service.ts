@@ -1,28 +1,22 @@
 import { Injectable } from "@angular/core";
 import { EmpModel } from "../emp-info/emp.model";
-import { HttpClient } from "@angular/common/http";
-import { map, tap } from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class EmpService {
-    empData: EmpModel[];
-
     constructor(private http: HttpClient) {
     }
 
     FetchData() {
-        return this.http.get<{ data: EmpModel[], message: string }>('http://localhost:3000/List').pipe(tap(res => {
-            this.empData = res.data
-            return res;
-        }))
+        return this.http.get<{ data: EmpModel[], message: string }>('http://localhost:3000/List')
     }
 
-    getDetails(UID){
+    getDetails(UID) {
         let url = `http://localhost:3000/Details/${UID}`
-        return this.http.get<{ data: EmpModel[], message: string }>(url)
+        return this.http.get<{ data: EmpModel, message: string }>(url)
     }
 
     onSave(FormValue) {
@@ -35,8 +29,6 @@ export class EmpService {
         return this.http.post('http://localhost:3000/post', { UID: +UID, ...FormValue })
     }
 
-
-
     onUpdate(UID, FormValue) {
 
         return this.http.put('http://localhost:3000/Update', { UID: UID, ...FormValue })
@@ -45,10 +37,6 @@ export class EmpService {
     onDelete(UID) {
         let url = `http://localhost:3000/Delete/${UID}`
         return this.http.delete<{ message: string }>(url)
-    }
-
-    get EmpData() {
-        return this.empData.slice()
     }
 
     get States() {
