@@ -26,7 +26,7 @@ export class EmpService {
             UID = UID + str[Math.round(Math.random() * 4)]
         }
 
-        return this.http.post('http://localhost:3000/post', { UID: +UID, ...FormValue })
+        return this.http.post('http://localhost:3000/post', { UID: +UID , ...FormValue })
     }
 
     onUpdate(UID, FormValue) {
