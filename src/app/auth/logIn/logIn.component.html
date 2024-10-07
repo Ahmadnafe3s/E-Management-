@@ -1,0 +1,44 @@
+<form class="container-fluid" [formGroup]="logInform" (ngSubmit)="onSubmit()">
+    <div class="row justify-content-center ">
+
+        <div class="col-md-4 col-11 form-body">
+
+            <p class="logo"><span class="E">E</span> Management</p>
+
+
+            <div class="mb-3">
+                <label for="email">Email*</label>
+                <input type="text" id="email" class="form-control" placeholder="example@gmail.com"
+                    formControlName="Email">
+                <p *ngIf="logInform.get('Email').invalid && logInform.get('Email').touched" class="text-danger">Enter
+                    Valid Email!</p>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="Password">Password*</label>
+                <input type="password" id="Password" class="form-control" placeholder="Password"
+                    formControlName="Password">
+                <p *ngIf="logInform.get('Password').invalid && logInform.get('Password').touched" class="text-danger">
+                    Password should be 8 to 10 in length!</p>
+            </div>
+
+
+            <div class="text-end mb-3">
+                <a href="/Auth/forget_password">forget password</a>
+            </div>
+
+            <!-- Forget password button -->
+
+            <div>
+                <button type="submit" class="button" [disabled]="logInform.invalid">Log In</button>
+            </div>
+        </div>
+
+        <div class="text-center mt-2">
+            <p class="d-inline-block me-2">Don't have an account </p>
+            <a routerLink="/Auth/signUp" class="links">SignUp</a>
+        </div>
+
+    </div>
+</form>

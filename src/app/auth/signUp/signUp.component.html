@@ -1,0 +1,45 @@
+<form class="container-fluid" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <div class="row justify-content-center ">
+
+        <div class="col-md-4 col-11 form-body">
+
+            <p class="logo"><span class="E">E</span> Management</p>
+
+            <div class="mb-3">
+                <label for="email">Name*</label>
+                <input type="text" id="name" class="form-control" placeholder="Enter Your Name" formControlName="Name">
+                <p *ngIf="signUpForm.get('Name').invalid && signUpForm.get('Name').touched" class="text-danger">
+                    Enter Valid Name!</p>
+            </div>
+
+            <div class="mb-3">
+                <label for="email">Email*</label>
+                <input type="text" id="email" class="form-control" placeholder="example@gmail.com"
+                    formControlName="Email" (blur)="verifyEmail()">
+                <p *ngIf="signUpForm.get('Email').invalid && signUpForm.get('Email').touched" class="text-danger">
+                    Enter Valid Email!</p>
+                <p class="text-success" *ngIf="isUser && signUpForm.get('Email').valid ">{{isUser}}</p>
+                <p class="text-danger" *ngIf="emailVerificationError && signUpForm.get('Email').valid ">
+                    {{emailVerificationError}}</p>
+            </div>
+
+            <div class="mb-3">
+                <label for="Password">Password*</label>
+                <input type="password" id="Password" class="form-control" placeholder="Password"
+                    formControlName="Password">
+                <p *ngIf="signUpForm.get('Password').invalid && signUpForm.get('Password').touched" class="text-danger">
+                    Password should be 8 to 10 in length!</p>
+            </div>
+
+            <div>                                                     <!-- true will disable it -->   
+                <button type="submit" class="button" [disabled]="signUpForm.invalid || emailVerificationError">Sign
+                    Up</button>
+            </div>
+        </div>
+
+        <div class="text-center mt-2">
+            <p>Already have an account <a class="link" routerLink="/Auth/logIn"> log In</a></p>
+        </div>
+
+    </div>
+</form>

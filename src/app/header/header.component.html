@@ -1,15 +1,15 @@
 <header>
     <div class="logo"><span>E</span> Management</div>
     <nav [ngClass]="{'Open' : open}">
-        <div class="logo"><span>E</span> Management</div>
+        <div class="logo" routerLink="/"><span>E</span> Management</div>
         <ul>
-            <li *ngIf="!Authenticated"><a a routerLinkActive="click" routerLink="Auth" (click)="open = false">LogIn /
-                    Register</a></li>
-            <li *ngIf="Authenticated"><a routerLinkActive="click" routerLink="E-Table"
+            <li *ngIf="!isAuthenticated"><a a routerLinkActive="click" routerLink="Auth/logIn" (click)="open = false">LogIn</a>
+            </li>
+            <li *ngIf="isAuthenticated"><a routerLinkActive="click" routerLink="E-Table"
                     (click)="open = false">E-Table</a></li>
-            <li *ngIf="Authenticated"><a routerLink="Add-Data" routerLinkActive="click" (click)="open = false">Add
+            <li *ngIf="isAuthenticated"><a routerLink="Add-Data" routerLinkActive="click" (click)="open = false">Add
                     Data</a></li>
-            <li *ngIf="Authenticated"><a routerLinkActive="click" (click)="LogOut()"
+            <li *ngIf="isAuthenticated"><a routerLinkActive="click" (click)="LogOut()"
                     [style]="{cursor : 'pointer'}">LogOut</a></li>
         </ul>
     </nav>

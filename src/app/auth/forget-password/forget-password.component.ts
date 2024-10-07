@@ -20,6 +20,8 @@ enum field {
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.css']
 })
+
+
 export class ForgetPasswordComponent implements OnInit {
 
   fpForm: FormGroup;
@@ -27,6 +29,7 @@ export class ForgetPasswordComponent implements OnInit {
   isLoading: boolean = false;
   expiresIn: number;
   Resend: boolean = false;
+
   constructor(private authService: AuthService, private toast: NgToastService, private router: Router) { }
 
   ngOnInit(): void {
@@ -47,8 +50,9 @@ export class ForgetPasswordComponent implements OnInit {
   validateEmail() {
     this.isLoading = true
     let email = this.fpForm.get('Email').value
-    this.authService.validateEmail(email).subscribe(
-      res => {
+    this.authService.validateEmail(email).subscribe({
+
+      next: (res) => {
         this.OTP_validation()
         this.isLoading = false;
         localStorage.setItem('validated_Email_res', JSON.stringify(res))
@@ -56,53 +60,63 @@ export class ForgetPasswordComponent implements OnInit {
         this.Step = field.OTP;
       },
 
-      err => {
+      error: ({ message }) => {
         this.isLoading = false;
-        this.toast.error({ detail: "ERROR", summary: err, duration: 3000, position: 'topCenter' });
-      })
+        this.toast.error({ detail: "ERROR", summary: message, duration: 3000, position: 'topCenter' });
+      }
+
+    })
   }
 
 
 
   verifyOtp() {
-    this.isLoading = true
-    let otp = this.fpForm.get('Otp').value
-    let secretKey = JSON.parse(localStorage.getItem('validated_Email_res')).secretKey
 
-    this.authService.otpValidation(otp, secretKey).subscribe(res => {
-      this.isLoading = false
-      this.Step = field.New_Password;
-      this.toast.success({ detail: "SUCCESS", summary: res.message, duration: 3000, position: 'topCenter' });
-    },
-      err => {
+    this.isLoading = true
+    const otp = this.fpForm.get('Otp').value
+    const secretKey = JSON.parse(localStorage.getItem('validated_Email_res')).secretKey
+
+    this.authService.otpValidation(otp, secretKey).subscribe({
+      next: ({ message }) => {
         this.isLoading = false
-        this.toast.error({ detail: "ERROR", summary: err, duration: 3000, position: 'topCenter' });
+        this.Step = field.New_Password;
+        this.toast.success({ detail: "Success", summary: message, duration: 2000, position: 'topCenter' });
+      },
+      error: ({ message }) => {
+        this.isLoading = false
+        this.toast.error({ detail: "Error", summary: message, duration: 2000, position: 'topCenter' });
       }
-    )
+    })
   }
 
 
 
   updatePassword() {
-    this.isLoading = true
-    const email = JSON.parse(localStorage.getItem('validated_Email_res')).email
-    let newPassword = this.fpForm.get('New-Password').value
 
-    if (this.fpForm.get('New-Password').value === this.fpForm.get('Confirm-Password').value) {
-      this.authService.updatePassword(email, newPassword).subscribe(res => {
-        this.isLoading = false
-        localStorage.removeItem('validated_Email_res')
-        this.toast.success({ detail: "SUCCESS", summary: res.message, duration: 3000, position: 'topCenter' });
-        this.router.navigate(['/Auth'])
-      },
-        err => {
-          this.isLoading = false
-          this.toast.error({ detail: "ERROR", summary: err, duration: 3000, position: 'topCenter' });
-        }
-      )
-    } else {
+    this.isLoading = true
+
+    const email = JSON.parse(localStorage.getItem('validated_Email_res')).Email
+
+    const newPassword = this.fpForm.get('New-Password').value
+
+    if (this.fpForm.get('New-Password').value !== this.fpForm.get('Confirm-Password').value) {
       this.toast.error({ detail: "ERROR", summary: 'Password did not Match!', duration: 3000, position: 'topCenter' });
+      return null
     }
+
+    this.authService.updatePassword(email, newPassword).subscribe({
+
+      next: ({ message }) => { // destructuring from res
+        this.toast.success({ detail: "SUCCESS", summary: message, duration: 3000, position: 'topCenter' });
+        this.router.navigate(['/Auth/logIn'])
+        localStorage.removeItem('validated_Email_res')
+        this.isLoading = false
+      },
+      error: ({ message }) => {
+        this.toast.error({ detail: "ERROR", summary: message, duration: 3000, position: 'topCenter' });
+        this.isLoading = false
+      }
+    })
 
   }
 

@@ -2,31 +2,34 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmpService } from '../Shared/emp.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { EmpModel } from './emp.model';
+import { ActivatedRoute, Params} from '@angular/router';
 import { Observable } from 'rxjs';
 import { NgToastService } from 'ng-angular-popup';
 import { LoadingComponent } from '../Shared/loading/loading.component';
+import { districts, Employee, states } from '../types/type';
+
 
 @Component({
   selector: 'app-emp-info',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, LoadingComponent],
-  templateUrl: './emp-info.component.html',
-  styleUrls: ['./emp-info.component.css']
+  templateUrl: './employee-form.component.html',
+  styleUrls: ['./employee-form.component.css']
 })
-export class EmpInfoComponent implements OnInit {
+
+
+export class EmployeeFormComponent implements OnInit {
+
   gender = ['Male', 'Female', 'Other']
   internType = ['PartTime', 'FullTime'];
-  IndividulEmp: EmpModel;
   UID;
   editMode = false;
   empForm: FormGroup;
   isLoading = false;
-  states;
-  district: { Id: number, Name: string, State_Id: number };
-  constructor(private empService: EmpService, private router: ActivatedRoute, private toast: NgToastService, private route: Router) {
-  }
+  states: states;
+  district: districts;
+
+  constructor(private empService: EmpService, private router: ActivatedRoute, private toast: NgToastService) { }
 
   ngOnInit(): void {
 
@@ -37,19 +40,15 @@ export class EmpInfoComponent implements OnInit {
 
     // get data from server via UID to bind into forms ....
     if (this.editMode) {
-      this.empService.getDetails(this.UID).subscribe(res => {
-        this.IndividulEmp = res.data
-        this.HandleForm(this.IndividulEmp)
-      })
+      this.fetchEmployeeData(this.UID)
     }
 
-    this.HandleForm('')
-
-    // this.getStates()
+    this.HandleForm('' as any)
     this.getStates()
+
   }
 
-  private HandleForm(IndividulEmp) {
+  private HandleForm(IndividulEmp: Employee) {
     let name = '';
     let email = '';
     let phone: number;
@@ -88,31 +87,38 @@ export class EmpInfoComponent implements OnInit {
 
 
   onSubmit() {
+
     this.isLoading = true; //Hiding button on submit
     let obser: Observable<any>;
+
     if (this.editMode) {
-      let UID = this.IndividulEmp.UID
+      const UID = this.UID
       obser = this.empService.onUpdate(UID, this.empForm.value)
     }
     else {
-      obser = this.empService.onSave(this.empForm.value)
+      obser = this.empService.onSubmit(this.empForm.value)
     }
 
-    obser.subscribe(
-      res => {
-        this.isLoading = false;
+    obser.subscribe({
+      next: (res) => {
+
         this.toast.success({ detail: "SUCCESS", summary: res.message, duration: 3000, position: 'topCenter' });
 
         if (this.editMode) {
           this.editMode = false;
-          this.route.navigate(['E-Table/Details', this.UID])
         }
         this.empForm.reset()
       },
-      err => {
+      error: (err) => {
         this.isLoading = false;
         this.toast.error({ detail: "ERROR", summary: err.message, duration: 3000, position: 'topCenter' });
+      },
+
+      complete: () => {
+        this.isLoading = false;
       }
+
+    }
     )
   }
 
@@ -122,24 +128,64 @@ export class EmpInfoComponent implements OnInit {
     this.empForm.reset();
   }
 
+
   getStates() {
+
     this.empService.States
-      .subscribe(res => {
-        this.states = res.data;
-        //Getting district on edit time
-        if (this.editMode) {
+
+      .subscribe({
+
+        next: async ({ States }) => {
+
+          this.states = await States;
+
           this.getDistrict()
+
+        },
+
+        error: ({ message }) => {
+
+          this.toast.error({ detail: "ERROR", summary: message, duration: 2000 })
+
         }
       })
+
   }
 
+
   getDistrict() {
-    let stateId = this.empForm.value.State
+
+    const stateId = this.empForm.value.State
+
     if (this.empForm.get('State').valid) {
-      this.empService.getDistrict(stateId)
-        .subscribe(res => {
-          this.district = res.data
-        })
+
+      this.empService.getDistrict(stateId).subscribe({
+
+        next: ({ Districts }) => {
+          this.district = Districts
+        },
+
+        error: ({ message }) => {
+          this.toast.error({ detail: "ERROR", summary: message, duration: 2000 })
+        }
+      },
+      )
     }
+  }
+
+
+  fetchEmployeeData(UID) {
+
+    this.empService.getEmployeeDetails(UID).subscribe({
+
+      next: ({ details }) => {
+        this.HandleForm(details)
+      },
+
+      error: ({ message }) => {
+        this.toast.error({ detail: "ERROR", summary: message, duration: 2000 })
+      }
+
+    })
   }
 }

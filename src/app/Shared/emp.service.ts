@@ -1,50 +1,83 @@
 import { Injectable } from "@angular/core";
-import { EmpModel } from "../emp-info/emp.model";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { environment } from "src/environments/environment.development";
+import { districtResponseType , employeeDetailsResponse, employeesListResponse, stateResponseType } from "../types/type";
+import { catchError, throwError } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class EmpService {
-    constructor(private http: HttpClient) {
+
+
+    constructor(private http: HttpClient) { }
+
+
+    getEmployeesList() {
+        return this.http.get<employeesListResponse>(environment.API + '/employeesList').pipe(catchError(this.handleError as any))
     }
 
-    FetchData() {
-        return this.http.get<{ data: EmpModel[], message: string }>('http://localhost:3000/List')
+
+    getEmployeeDetails(UID) {
+        return this.http.get<employeeDetailsResponse>(environment.API + '/Details/' + UID)
     }
 
-    getDetails(UID) {
-        let url = `http://localhost:3000/Details/${UID}`
-        return this.http.get<{ data: EmpModel, message: string }>(url)
+
+    onSubmit(FormValue) {
+
+        const UID = this.generateUID()
+
+        return this.http.post(environment.API + '/postEmployee', { UID, ...FormValue })
     }
 
-    onSave(FormValue) {
+
+    onUpdate(UID, FormValue) {
+
+        return this.http.put(environment.API + '/updateEmployee', { UID: UID, ...FormValue })
+
+    }
+
+
+    onDelete(UID) {
+        return this.http.delete<{ message: string }>(environment.API + '/deleteEmployee/' + UID)
+    }
+
+
+    get States() {
+        return this.http.get<stateResponseType>(`${environment.API}/States`)
+    }
+
+
+    getDistrict(id) {
+        return this.http.get<districtResponseType>(environment.API + '/District/' + id)
+    }
+
+
+    generateUID() {
         let str = '12345'
         let UID: string | number = 22;
         for (let i = 0; i < str.length; i++) {
             UID = UID + str[Math.round(Math.random() * 4)]
         }
 
-        return this.http.post('http://localhost:3000/post', { UID: +UID , ...FormValue })
+        return +UID
     }
 
-    onUpdate(UID, FormValue) {
 
-        return this.http.put('http://localhost:3000/Update', { UID: UID, ...FormValue })
-    }
+    handleError(err:HttpErrorResponse){
 
-    onDelete(UID) {
-        let url = `http://localhost:3000/Delete/${UID}`
-        return this.http.delete<{ message: string }>(url)
-    }
+        let message = null;
+        if (!err || !err.error) {
+            message = 'No Internet Connection'
+        }
+        else {
+            message = err.error.message
+        }
+        return throwError(() => {
+            throw new Error(message)
+        })
+        
 
-    get States() {
-        return this.http.get<{ data: { Id: number, Name: string } }>('http://localhost:3000/States')
-    }
-
-    getDistrict(id) {
-        let url = `http://localhost:3000/District/${id}`
-        return this.http.get<{ data: { Id: number, Name: string, State_Id: number } }>(url)
     }
 }

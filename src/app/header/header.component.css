@@ -1,4 +1,3 @@
-
 header {
     display: flex;
     width: 80%;
@@ -17,40 +16,42 @@ header {
     display: inline;
     font-size: 20px;
     font-weight: 600;
+    cursor: pointer;
+
 }
 
-nav{
+nav {
     padding-top: 15px;
 }
 
-nav .logo{
+nav .logo {
     display: none;
 }
 
-nav ul{
+nav ul {
     display: flex;
 
 }
 
-nav ul li a{
+nav ul li a {
     color: black;
     text-decoration: none;
     display: block;
     font-weight: 600;
     margin: 3px 2px;
-     padding: 8px 18px;
-     border-radius: 30px;
+    padding: 8px 18px;
+    border-radius: 30px;
 }
 
 /* nav ul li a:hover{
     background-color: #f6f4ff;
 } */
 
-li{
+li {
     list-style: none;
 }
 
-.hamburger{
+.hamburger {
     display: none;
     height: fit-content;
     padding: 3px 8px;
@@ -59,11 +60,11 @@ li{
     cursor: pointer;
 }
 
-.hamburger:hover{
+.hamburger:hover {
     background-color: #f6f4ff;
 }
 
-.hamburger div{
+.hamburger div {
     width: 30px;
     height: 2px;
     background-color: black;
@@ -72,16 +73,16 @@ li{
 
 
 
-@media screen and (max-width:1000px){
-    .hamburger{
+@media screen and (max-width:1000px) {
+    .hamburger {
         display: block;
     }
 
-    header{
+    header {
         width: 90%;
     }
 
-    nav{
+    nav {
         padding-top: 10px;
         position: absolute;
         top: 0;
@@ -94,34 +95,34 @@ li{
         transition: 0.2s;
     }
 
-    .Open{
+    .Open {
         left: 0;
     }
 
-    nav ul{
+    nav ul {
         display: block;
     }
 
-    nav .logo{
+    nav .logo {
         margin-top: 20px;
         display: block;
         text-align: center;
         font-size: 20px;
     }
 
-    nav ul li a{
+    nav ul li a {
         margin-bottom: 5px;
         padding: 10px 15px;
-       border-radius: 5px;
+        border-radius: 5px;
     }
 }
 
-.click{
+.click {
     color: #fefefe !important;
     background-color: var(--button);
 }
 
-span{
+span {
     color: var(--button);
     font-size: 25px;
 }

@@ -5,7 +5,10 @@
 }
 
 form {
-    margin: 17vh 0;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50% , -50%);
 }
 
 .logo {
@@ -19,23 +22,32 @@ form {
     font-size: 25px;
 }
 
-.btn {
+.button {
     background-color: var(--button);
     width: 100%;
     color: white;
     padding: 7px 0;
     font-weight: 600;
-}
-
-.btn:hover {
-    transition: all 0.2s ease-in-out;
-    transform: scale(0.96);
     box-shadow: 1px 0 20px 0 rgba(0, 0, 0, 0.202);
+    border: none;
+    border-radius: 7px;
 }
 
-.log {
+.button:active {
+    transition: all 0.2s ease-in-out;
+    transform: scale(0.95);
+}
+
+.link {
     color: rgb(0, 115, 255);
     text-decoration: none;
     font-weight: 500;
     cursor: pointer;
+}
+
+
+.button:disabled{
+    pointer-events: none;
+    opacity: 0.7;
+    transform: scale(1);
 }

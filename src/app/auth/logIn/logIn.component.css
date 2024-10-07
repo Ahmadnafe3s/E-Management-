@@ -1,0 +1,52 @@
+.form-body {
+    background-color: #fefefe;
+    border-radius: 10px;
+    padding: 20px 16px 19px 16px;
+}
+
+form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logo {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.E {
+    color: var(--button);
+    font-size: 25px;
+}
+
+.button {
+    background-color: var(--button);
+    width: 100%;
+    color: white;
+    padding: 7px 0;
+    font-weight: 600;
+    box-shadow: 1px 0 20px 0 rgba(0, 0, 0, 0.202);
+    border: none;
+    border-radius: 7px;
+}
+
+.button:active {
+    transition: all 0.2s ease-in-out;
+    transform: scale(0.95);
+}
+
+
+.button:disabled{
+    pointer-events: none;
+    opacity: 0.7;
+    transform: scale(1);
+}
+
+
+.links {
+    text-decoration: none;
+    font-weight: 600;
+}

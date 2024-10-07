@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NgToastModule } from 'ng-angular-popup';
 import { AuthService } from './auth/auth.service';
 import { BnNgIdleService } from 'bn-ng-idle';
+import { SessionService } from './auth/session.service';
 
 @Component({
   standalone: true,
@@ -15,14 +16,12 @@ import { BnNgIdleService } from 'bn-ng-idle';
 export class AppComponent implements OnInit {
   title = 'curd-application';
 
-  constructor(private authService: AuthService, private inActive: BnNgIdleService) {
-    authService.autoLogIn()
-  }
+  constructor(private session: SessionService) {}
 
   ngOnInit(): void {
-    this.inActive.startWatching(7200).subscribe(res => {
-      this.authService.onLogOut()
-    })
+
+    this.session.user.next(this.session.userSession())
+
   }
 
 }

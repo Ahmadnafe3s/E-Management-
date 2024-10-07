@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-10" *ngIf="!isLoading && !(EmpList.length < 1)">
+    <div class="col-md-10" *ngIf="!isLoading && (employeesList?.length > 0)">
       <table class="table">
         <thead class="th">
           <tr>
@@ -10,7 +10,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let empList of EmpList ; let index = index">
+          <tr *ngFor="let empList of employeesList ; let index = index">
             <th class="tb" scope="row">{{empList.UID}}</th>
             <td class="tb">{{empList.Name}}</td>
             <td class="tb"><i class="bi bi-arrow-right-circle-fill" [routerLink]="['Details' , empList.UID]"></i></td>
@@ -20,7 +20,7 @@
     </div>
 
     <!-- Alert for data not avaliable -->
-    <div class="col-md-6 alert alert-light" *ngIf="!isLoading && (EmpList.length < 1) && !err">
+    <div class="col-md-6 alert alert-light" *ngIf="!isLoading && (employeesList?.length < 1) && !err">
       <h4>You dont have any Data..</h4>
       <br>
       <div style="float: right;">
